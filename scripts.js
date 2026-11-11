@@ -66,7 +66,7 @@ function cadastrarFuncionario() {
     alert(`Funcionário ${funcionario.nome} cadastrado com sucesso!`);
 }
 
-function excluirFuncionario(funcionario) {
+const excluirFuncionario = (funcionario) => {
     let indice = funcionarios.findIndex((item) => item === funcionario);
 
     if (indice !== -1) {
@@ -80,7 +80,7 @@ function excluirFuncionario(funcionario) {
 
         alert(`Funcionário ${funcionario.nome} excluído com sucesso!`);
     }
-}
+};
 
 function editarFuncionario(funcionario) {
     nome.value = funcionario.nome;
@@ -92,7 +92,7 @@ function editarFuncionario(funcionario) {
     botaoCadastro.value = "Salvar";
 }
 
-function salvarEdicao() {
+const salvarEdicao = () => {
     if (funcionarioEmEdicao === null) {
         return;
     }
@@ -106,7 +106,7 @@ function salvarEdicao() {
 
     funcionarioEmEdicao = null;
     botaoCadastro.value = "Cadastrar";
-}
+};
 
 function atualizarTabela() {
     tabela.innerHTML = "";
@@ -144,7 +144,7 @@ function atualizarTabela() {
         });
 
         //Ação Botão Editar
-        botaoEditar.addEventListener("click", function() {
+        botaoEditar.addEventListener("click", () => {
             editarFuncionario(funcionario);
         });
     });
