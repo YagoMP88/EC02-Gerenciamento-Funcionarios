@@ -148,7 +148,63 @@ function atualizarTabela() {
             editarFuncionario(funcionario);
         });
     });
+    gerarRelatorios();
+}
 
+function gerarRelatorios() {
+    // Funcionários com salário acima de R$ 5.000
+    let salariosAltos = funcionarios.filter(
+        (funcionario) => funcionario.salario > 5000
+    );
+
+    let nomesFuncionarios = salariosAltos.map(
+        (funcionario) => funcionario.nome
+    );
+
+    let resultado = document.getElementById("relatorioSalariosAltos");
+
+    resultado.textContent = nomesFuncionarios.length > 0
+        ? nomesFuncionarios.join(", ")
+        : "Nenhum funcionário com salário acima de R$ 5.000.";
+
+    // Média salarial
+    let somaSalarios = funcionarios.reduce(
+        (soma, funcionario) => soma + funcionario.salario, 0
+    );
+
+    let mediaSalarial = funcionarios.length > 0
+        ? somaSalarios / funcionarios.length
+        : 0;
+
+    let resultadoMedia = document.getElementById("relatorioMediaSalarial");
+
+    resultadoMedia.textContent = mediaSalarial.toLocaleString("pt-BR", {
+        style: "currency",
+        currency: "BRL"
+    }); 
+
+    // Cargos únicos
+    let cargos = funcionarios.map((funcionario) => funcionario.cargo);
+
+    let cargosUnicos = [...new Set(cargos)];
+
+    let resultadoCargos = document.getElementById("relatorioCargosUnicos");
+
+    resultadoCargos.textContent = cargosUnicos.length > 0
+        ? cargosUnicos.join(", ")
+        : "Nenhum cargo cadastrado.";
+
+    // Nomes dos funcionários em maiúsculas
+    let nomesMaiusculos = funcionarios.map(
+        (funcionario) => funcionario.nome.toUpperCase()
+    );
+
+    let resultadoNomes = document.getElementById("relatorioNomesMaiusculos");
+
+    resultadoNomes.textContent = nomesMaiusculos.length > 0
+        ? nomesMaiusculos.join(", ")
+        : "Nenhum funcionário cadastrado.";    
+    
 }
 
 document.querySelector("form").addEventListener("submit", function(event) {
@@ -164,3 +220,5 @@ document.querySelector("form").addEventListener("submit", function(event) {
 
     document.querySelector("form").reset();
 });
+
+gerarRelatorios();
