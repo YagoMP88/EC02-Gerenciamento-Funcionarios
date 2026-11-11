@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EC02-Funcionarios</title>
+</head>
+<body>
+    <a href="/index.html">Home</a>
+    <hr>
+    <h4>Formulário</h4>
+    <form action="" method="post">
+        <label for="nome">Nome:</label> <br>
+        <input type="text" id="nome" name="nome" required> <br><br>
+
+        <label for="idade">Idade:</label> <br>
+        <input type="number" id="idade" name="idade" required> <br>
+        <br>
+        <label for="cargo">Cargo:</label> <br>
+        <input type="text" id="cargo" name="cargo" required>
+        <br> <br>
+        <label for="salario">Salário:</label> <br>
+        <input type="number" name="salario" id="salario" min="0" step="0.01" required>
+        <br> <br>  <br> 
+        <input type="submit" id="btnCadastrar" value="Cadastrar" >
+        <hr>
+        <table border=".1" cellpadding ="5" cellspacing="0">
+            <thead>
+                <tr>
+                    <th bgcolor="gray" width="130">Nome</th>
+                    <th bgcolor="gray" width="130">Idade</th>
+                    <th bgcolor="gray" width="130">Cargo</th>
+                    <th bgcolor="gray" width="130">Salário</th>
+                </tr>
+            </thead>
+            <tbody id="tabela">
+            </tbody>
+        </table>
+    </form>
+    <script src="scripts.js"></script>
+</body>
+</html>
