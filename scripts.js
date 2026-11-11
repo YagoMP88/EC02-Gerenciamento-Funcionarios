@@ -3,6 +3,8 @@ let idade = document.getElementById("idade");
 let cargo = document.getElementById("cargo");
 let salario = document.getElementById("salario");
 let tabela = document.getElementById("tabela");
+let botaoCadastro = document.getElementById("btnCadastrar");
+let funcionarioEmEdicao = null;
 let funcionarios = [];
 
 class Funcionario{
@@ -64,6 +66,48 @@ function cadastrarFuncionario() {
     alert(`Funcionário ${funcionario.nome} cadastrado com sucesso!`);
 }
 
+function excluirFuncionario(funcionario) {
+    let indice = funcionarios.findIndex((item) => item === funcionario);
+
+    if (indice !== -1) {
+        if (funcionarioEmEdicao === funcionario) {
+            funcionarioEmEdicao = null;
+            botaoCadastro.value = "Cadastrar";
+            document.querySelector("form").reset();
+        }
+        funcionarios.splice(indice, 1);
+        atualizarTabela();
+
+        alert(`Funcionário ${funcionario.nome} excluído com sucesso!`);
+    }
+}
+
+function editarFuncionario(funcionario) {
+    nome.value = funcionario.nome;
+    idade.value = funcionario.idade;
+    cargo.value = funcionario.cargo;
+    salario.value = funcionario.salario;
+
+    funcionarioEmEdicao = funcionario;
+    botaoCadastro.value = "Salvar";
+}
+
+function salvarEdicao() {
+    if (funcionarioEmEdicao === null) {
+        return;
+    }
+
+    funcionarioEmEdicao.nome = nome.value;
+    funcionarioEmEdicao.idade = Number(idade.value);
+    funcionarioEmEdicao.cargo = cargo.value;
+    funcionarioEmEdicao.salario = Number(salario.value);
+
+    alert(`Funcionário ${funcionarioEmEdicao.nome} atualizado com sucesso!`);
+
+    funcionarioEmEdicao = null;
+    botaoCadastro.value = "Cadastrar";
+}
+
 function atualizarTabela() {
     tabela.innerHTML = "";
 
@@ -78,6 +122,31 @@ function atualizarTabela() {
                 style: "currency",
                 currency: "BRL"
             });
+
+        let celulaAcoes = linha.insertCell();
+
+        // Botão Editar
+        let botaoEditar = document.createElement("button");
+        botaoEditar.textContent = "Editar";
+        botaoEditar.type = "button";
+
+        // Botão Excluir
+        let botaoExcluir = document.createElement("button");
+        botaoExcluir.textContent = "Excluir";
+        botaoExcluir.type = "button";
+
+        celulaAcoes.appendChild(botaoEditar);
+        celulaAcoes.appendChild(botaoExcluir);
+
+        //Ação Botão Excluir
+        botaoExcluir.addEventListener("click", function() {
+            excluirFuncionario(funcionario);
+        });
+
+        //Ação Botão Editar
+        botaoEditar.addEventListener("click", function() {
+            editarFuncionario(funcionario);
+        });
     });
 
 }
@@ -85,7 +154,12 @@ function atualizarTabela() {
 document.querySelector("form").addEventListener("submit", function(event) {
     event.preventDefault();
 
-    cadastrarFuncionario();
+    if (funcionarioEmEdicao === null) {
+        cadastrarFuncionario();
+    } else {
+        salvarEdicao();
+    }
+
     atualizarTabela();
 
     document.querySelector("form").reset();
